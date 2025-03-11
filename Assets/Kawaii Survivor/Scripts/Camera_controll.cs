@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Camera_controll : MonoBehaviour
 {
+    [Header("Elements")]
     [SerializeField] private Transform Target;
     [SerializeField] private Vector2 minMaxXY;
 
@@ -19,6 +20,13 @@ public class Camera_controll : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(Target==null)
+        {
+            Debug.LogWarning("No target specified");
+
+            return;
+        }
+
         Vector3 tposition = Target.transform.position;
         tposition.z = -10;
         tposition.x = Mathf.Clamp(tposition.x, -minMaxXY.x, minMaxXY.x);
