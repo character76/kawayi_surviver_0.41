@@ -62,11 +62,14 @@ public class Enemy_follow : MonoBehaviour
     {
         if (isentering)
         {
-            Debug.Log("quiting");
+            //Debug.Log("quiting");
             return;
         }
-          
-        FollowPlayer();
+        if(player_dave!=null)
+        {
+            FollowPlayer();
+        }
+            
         if (attackTimer >= attackDelay)
         {
             Attack();
@@ -142,7 +145,15 @@ public class Enemy_follow : MonoBehaviour
 
     private void Attack()
     {
+        float distance = (player_dave.transform.position - transform.position).magnitude;
         attackTimer = 0;
+        if (distance < destroyRadius)
+        {
+            player_dave.TakeDamage(damage);
+            PlayEffect();
+            Destroy(gameObject);
+        }
+        
         
     }
 
