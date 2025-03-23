@@ -7,7 +7,7 @@ public class Enemy_follow : MonoBehaviour
     private bool isentering = false;
     [SerializeField] private GameObject enemy;
 
-    [Header("setting")]
+    [Header("Setting")]
     [SerializeField]private float speed;
     [SerializeField] private float destroyRadius;
 
@@ -17,6 +17,13 @@ public class Enemy_follow : MonoBehaviour
 
     [Header("DEBUG")]
     [SerializeField] private bool showGizmos;
+
+    [Header("Attack")]
+    [SerializeField] private int damage;
+    [SerializeField] private float attackFre;
+    private float attackDelay;
+    private float attackTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +34,8 @@ public class Enemy_follow : MonoBehaviour
             Debug.LogWarning("noplayer found destroy");
             Destroy(gameObject);
         }
+
+        attackDelay = 1f / attackFre;
 
         //HIde the renderer
         //SHow spawn indicator
@@ -44,8 +53,6 @@ public class Enemy_follow : MonoBehaviour
             LeanTween.scale(entranceeffect, targetScale, .3f)
                 .setLoopPingPong(4)
                 .setOnComplete(SpawnSequenceComplete);
-            
-
         }
 
     }
@@ -58,14 +65,20 @@ public class Enemy_follow : MonoBehaviour
             Debug.Log("quiting");
             return;
         }
-            
-        
+          
         FollowPlayer();
-
-        TryAttack();
+        if (attackTimer >= attackDelay)
+        {
+            Attack();
+            
+        }
+        else Wait();
         
         
-
+    }
+    private void Wait()
+    {
+        attackTimer += Time.deltaTime;
     }
 
     private void FollowPlayer()
@@ -78,7 +91,7 @@ public class Enemy_follow : MonoBehaviour
 
         transform.position = targetpos;
     }
-    private void TryAttack()
+    private void DestroyEnemy()
     {
         float distance = (player_dave.transform.position - transform.position).magnitude;
         //Debug.Log(player_dave.transform.position - transform.position);
@@ -125,6 +138,12 @@ public class Enemy_follow : MonoBehaviour
         enemy.SetActive(true); // 初始隐藏角色
         entranceeffect.SetActive(false); // 显示出场标识
         isentering = false;
+    }
+
+    private void Attack()
+    {
+        attackTimer = 0;
+        
     }
 
 
