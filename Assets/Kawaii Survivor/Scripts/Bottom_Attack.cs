@@ -7,8 +7,12 @@ public class Bottom_Attack : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Attack()
     {
-        weapon.GetComponent<DeBoink>().StartAttack();
-        Debug.Log("Attack！");
-        // TODO: 在这里添加你的攻击逻辑，比如播放动画、检测敌人等
+        if(!GlobalSettings.isAutoAttackOn)
+        {
+            weapon.GetComponent<DeBoink>().StartAttack();
+            Debug.Log("Attack！");
+            // TODO: 在这里添加你的攻击逻辑，比如播放动画、检测敌人等
+        }
+
     }
 }

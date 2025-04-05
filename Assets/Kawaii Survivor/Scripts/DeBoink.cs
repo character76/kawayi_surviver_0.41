@@ -19,6 +19,8 @@ public class DeBoink : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float aimLerp;
     [SerializeField] private int damage;
+    [SerializeField] private float attackDelay;
+    private float attackTimer;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -89,9 +91,11 @@ public class DeBoink : MonoBehaviour
     private void AutoAim()
     {
         Enemy_follow closest_Enemy = GetClosest();
-        Vector2 targetUp = Vector3.up;
+        Vector3 targetUp = Vector3.up;
         if(closest_Enemy!= null)
         {
+            
+            
             targetUp = (closest_Enemy.transform.position - transform.position).normalized;
         }
         else
@@ -100,9 +104,28 @@ public class DeBoink : MonoBehaviour
         }
         
         transform.up = Vector3.Lerp(transform.up, targetUp, Time.deltaTime * aimLerp);
+        if(targetUp!=Vector3.up)
+        {
+            if (GlobalSettings.isAutoAttackOn)
+            {
+                MangeAttackTimer();
+            }
+        }
+        IncrementAttackTimer();
     }
 
-    
+    private void MangeAttackTimer()
+    {
+        if(attackTimer>=attackDelay)
+        {
+            attackTimer = 0;
+            StartAttack();
+        }
+    }
+    private void IncrementAttackTimer()
+    {
+        attackTimer += Time.deltaTime;
+    }
 
     private void Attack()
     {
