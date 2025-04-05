@@ -155,8 +155,8 @@ public class Enemy_follow : MonoBehaviour
         if (distance < destroyRadius)
         {
             player_dave.TakeDamage(damage);
-            PlayEffect();
-            Destroy(gameObject);
+
+            
         }
         
         

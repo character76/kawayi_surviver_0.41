@@ -1,28 +1,48 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class DeBoink : MonoBehaviour
 {
+    enum State
+    {
+        Idle,
+        Attack
+    }
+    private State state;
+
     [Header("Elements")]
     [SerializeField] private Transform Hitpoint;
     [SerializeField] private float Hit_range;
+    private List<Enemy_follow> damagesEnemy = new List<Enemy_follow>();
 
     [Header("Settings")]
     [SerializeField] private float range;
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float aimLerp;
     [SerializeField] private int damage;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
     //[SerializeField] private Transform Enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        state = State.Idle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        AutoAim();
-        Attack();
+        switch (state)
+        {
+            case State.Idle:
+                AutoAim();
+                break;
+            case State.Attack:
+                Attacking();
+                break;
+
+        }
+        //Attack();
         //Debug.Log("Closest Enemy" + cloestIndex + " dis " + minDis);
         
     }
@@ -90,8 +110,33 @@ public class DeBoink : MonoBehaviour
 
         for (int i=0;i<enemies.Length;i++)
         {
-            enemies[i].GetComponent<Enemy_Health>().TakeDamage(damage);
-            Debug.Log("Attack"+i);
+            Enemy_follow enemy = enemies[i].GetComponent<Enemy_follow>();
+            if (!damagesEnemy.Contains(enemy) )
+            {
+                enemies[i].GetComponent<Enemy_Health>().TakeDamage(damage);
+                damagesEnemy.Add(enemies[i].GetComponent<Enemy_follow>());
+                Debug.Log("Attack" + i);
+            }
+            
+            
         }
+    }
+    [NaughtyAttributes.Button]
+    public void StartAttack()
+    {
+        animator.Play("Attack");
+        state = State.Attack;
+        damagesEnemy.Clear();
+
+    }
+    private void Attacking()
+    {
+        Attack();
+
+    }
+    private void StopAttack()
+    {
+        state = State.Idle;
+        damagesEnemy.Clear();
     }
 }

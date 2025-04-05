@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
         health -= realDamage;
         healthSlider.value = (float)health / (float)maxHealth;
         healthText.text = health + "/" + maxHealth;
-        Debug.Log("healthslider"+ healthSlider.value + "remaining health"+health);
+        //Debug.Log("healthslider"+ healthSlider.value + "remaining health"+health);
         if (health<=0)
         {
             Diemethod();
