@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class DeBoink : MonoBehaviour
 {
+    [Header("Elements")]
+    [SerializeField] private Transform Hitpoint;
+    [SerializeField] private float Hit_range;
+
     [Header("Settings")]
     [SerializeField] private float range;
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float aimLerp;
+    [SerializeField] private int damage;
     //[SerializeField] private Transform Enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,15 +22,16 @@ public class DeBoink : MonoBehaviour
     void Update()
     {
         AutoAim();
-        
+        Attack();
         //Debug.Log("Closest Enemy" + cloestIndex + " dis " + minDis);
-       
         
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position,range);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(Hitpoint.position, Hit_range);
     }
     private Enemy_follow GetClosest()
     {
@@ -74,5 +80,18 @@ public class DeBoink : MonoBehaviour
         }
         
         transform.up = Vector3.Lerp(transform.up, targetUp, Time.deltaTime * aimLerp);
+    }
+
+    
+
+    private void Attack()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(Hitpoint.position, Hit_range, enemyMask);
+
+        for (int i=0;i<enemies.Length;i++)
+        {
+            enemies[i].GetComponent<Enemy_Health>().TakeDamage(damage);
+            Debug.Log("Attack"+i);
+        }
     }
 }

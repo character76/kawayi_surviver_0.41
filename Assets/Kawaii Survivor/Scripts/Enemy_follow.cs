@@ -6,10 +6,14 @@ public class Enemy_follow : MonoBehaviour
     private player player_dave;
     private bool isentering = false;
     [SerializeField] private GameObject enemy;
+   
+    
 
     [Header("Setting")]
     [SerializeField]private float speed;
     [SerializeField] private float destroyRadius;
+    [SerializeField] private int maxHealth;
+    private int health;
 
     [Header("Effect")]
     [SerializeField] private GameObject particleeffect;
@@ -27,6 +31,7 @@ public class Enemy_follow : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        health = maxHealth;
         player_dave = FindFirstObjectByType<player>(); 
 
         if(player_dave == null)
@@ -105,7 +110,7 @@ public class Enemy_follow : MonoBehaviour
         }
     }
 
-    private void PlayEffect()
+    public void PlayEffect()
     {
         if(particleeffect!=null)
         {
@@ -156,6 +161,8 @@ public class Enemy_follow : MonoBehaviour
         
         
     }
+    
 
+    
 
 }
