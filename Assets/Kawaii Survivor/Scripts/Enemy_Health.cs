@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class Enemy_Health : MonoBehaviour
 {
     [Header("Effect")]
@@ -12,6 +13,8 @@ public class Enemy_Health : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Slider healthSlider;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Actions")]
+    public static Action<int,Vector2> onDamageTaken;
     void Start()
     {
         health = maxHealth;
@@ -34,6 +37,8 @@ public class Enemy_Health : MonoBehaviour
         healthSlider.value = (float)health / (float)maxHealth;
         //healthText.text = health + "/" + maxHealth;
         Debug.Log("healthslider" + healthSlider.value + "remaining health" + health);
+
+        onDamageTaken?.Invoke(damage,transform.position);
         if (health <= 0)
         {
             Diemethod();
