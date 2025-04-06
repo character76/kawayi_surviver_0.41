@@ -6,6 +6,7 @@ public class Enemy_follow : MonoBehaviour
     private player player_dave;
     private bool isentering = false;
     [SerializeField] private GameObject enemy;
+    [SerializeField] private Collider2D colliders;
    
     
 
@@ -145,6 +146,7 @@ public class Enemy_follow : MonoBehaviour
     {
         enemy.SetActive(true); // 初始隐藏角色
         entranceeffect.SetActive(false); // 显示出场标识
+        colliders.enabled=true;
         isentering = false;
     }
 

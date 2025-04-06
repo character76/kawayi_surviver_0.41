@@ -13,6 +13,7 @@ public class DeBoink : MonoBehaviour
     [SerializeField] private Transform Hitpoint;
     [SerializeField] private float Hit_range;
     private List<Enemy_follow> damagesEnemy = new List<Enemy_follow>();
+    [SerializeField] private BoxCollider2D Hitbox;
 
     [Header("Settings")]
     [SerializeField] private float range;
@@ -93,10 +94,9 @@ public class DeBoink : MonoBehaviour
         Enemy_follow closest_Enemy = GetClosest();
         Vector3 targetUp = Vector3.up;
         if(closest_Enemy!= null)
-        {
-            
-            
+        {   
             targetUp = (closest_Enemy.transform.position - transform.position).normalized;
+            transform.up = targetUp;
         }
         else
         {
@@ -130,7 +130,7 @@ public class DeBoink : MonoBehaviour
 
     private void Attack()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(Hitpoint.position, Hit_range, enemyMask);
+        Collider2D[] enemies = Physics2D.OverlapBoxAll(Hitpoint.position,Hitbox.bounds.size,Hitpoint.localEulerAngles.z,enemyMask);
 
         for (int i=0;i<enemies.Length;i++)
         {
