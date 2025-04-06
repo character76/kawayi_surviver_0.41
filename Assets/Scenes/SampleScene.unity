@@ -1073,7 +1073,7 @@ MonoBehaviour:
     m_Bits: 64
   aimLerp: 12
   damage: 5
-  attackDelay: 1.5
+  attackDelay: 0.5
   animator: {fileID: 603279416}
 --- !u!4 &603279415
 Transform:

@@ -20,7 +20,7 @@ public class DeBoink : MonoBehaviour
     [SerializeField] private float aimLerp;
     [SerializeField] private int damage;
     [SerializeField] private float attackDelay;
-    private float attackTimer;
+    private float attackTimer=0;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -116,7 +116,8 @@ public class DeBoink : MonoBehaviour
 
     private void MangeAttackTimer()
     {
-        if(attackTimer>=attackDelay)
+        IncrementAttackTimer();
+        if (attackTimer>=attackDelay)
         {
             attackTimer = 0;
             StartAttack();
@@ -150,6 +151,7 @@ public class DeBoink : MonoBehaviour
         animator.Play("Attack");
         state = State.Attack;
         damagesEnemy.Clear();
+        animator.speed = 1f / attackDelay;
 
     }
     private void Attacking()
