@@ -16,6 +16,7 @@ public class Enemy_Bullet : MonoBehaviour
     {
         //rig = GetComponent<Rigidbody2D>();
         //cli = GetComponent<Collider2D>();
+        LeanTween.delayedCall(gameObject, 5, () => rangeEnemy.ReleaseBullet(this));
     }
     void Start()
     {
@@ -38,6 +39,7 @@ public class Enemy_Bullet : MonoBehaviour
         //Debug.Log("Takedamge");
         if (collider.TryGetComponent(out Player player))
         {
+            LeanTween.cancel(gameObject);
             player.TakeDamage(1);
             this.cli.enabled = false;
             rangeEnemy.ReleaseBullet(this);
