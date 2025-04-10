@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
     }
     private void Diemethod()
     {
-        Debug.Log("Dead!");
+        Debug.Log("DaveDead!");
         SceneManager.LoadScene(0);
 
     }

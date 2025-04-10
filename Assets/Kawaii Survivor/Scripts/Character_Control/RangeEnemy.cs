@@ -1,18 +1,19 @@
 using UnityEngine;
-
-public class Enemy_follow : MonoBehaviour
+[RequireComponent(typeof(RangeEnemyAttack))]
+public class RangeEnemy : MonoBehaviour
 {
-    [Header("Elements")] 
+    [Header("Elements")]
     private Player player_dave;
     private bool isentering = false;
     [SerializeField] private GameObject enemy;
     [SerializeField] private Collider2D colliders;
-   
-    
+    private RangeEnemyAttack Rattack;
+
+
 
     [Header("Setting")]
-    [SerializeField]private float speed;
-    [SerializeField] private float destroyRadius;
+    [SerializeField] private float speed;
+    [SerializeField] private float rangePlayerDetectionRange;
     [SerializeField] private int maxHealth;
     private int health;
 
@@ -23,51 +24,42 @@ public class Enemy_follow : MonoBehaviour
     [Header("DEBUG")]
     [SerializeField] private bool showGizmos;
 
-    [Header("Attack")]
-    [SerializeField] private int damage;
-    [SerializeField] private float attackFre;
-    private float attackDelay;
-    private float attackTimer;
-
-    [Header("Range Enemy Relate")]
-    [SerializeField] private bool range_enemy;
-    [SerializeField] private float rangePlayerDetectionRange;
-
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Rattack = GetComponent<RangeEnemyAttack>();
         health = maxHealth;
-        player_dave = FindFirstObjectByType<Player>(); 
-
-        if(player_dave == null)
+        player_dave = FindFirstObjectByType<Player>();
+        Rattack.Configure(player_dave);
+        if (player_dave == null)
         {
             Debug.LogWarning("noplayer found destroy");
             Destroy(gameObject);
         }
 
-        attackDelay = 1f / attackFre;
+        
 
         //HIde the renderer
         //SHow spawn indicator
 
         //Scale spawn indi to show
         //then show enemy and hide spawn 
-        
 
-        if(entranceeffect!=null)
+
+        if (entranceeffect != null)
         {
             isentering = true;
             enemy.SetActive(false); // 初始隐藏角色
             entranceeffect.SetActive(true); // 显示出场标识
-            Vector3 targetScale = entranceeffect.transform.localScale * 1.2f; 
+            Vector3 targetScale = entranceeffect.transform.localScale * 1.2f;
             LeanTween.scale(entranceeffect, targetScale, .3f)
                 .setLoopPingPong(4)
                 .setOnComplete(SpawnSequenceComplete);
         }
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isentering)
@@ -75,37 +67,28 @@ public class Enemy_follow : MonoBehaviour
             //Debug.Log("quiting");
             return;
         }
-        if(player_dave!=null)
+
+        ManageAttack();
+    }
+    private void ManageAttack()
+    {
+        float distance = (player_dave.transform.position - transform.position).magnitude;
+        if (distance > rangePlayerDetectionRange)
         {
             FollowPlayer();
+
         }
-            
-        if (attackTimer >= attackDelay)
+        else
         {
             TryAttack();
-            
         }
-        else Wait();
-        
-        
     }
-    private void Wait()
-    {
-        attackTimer += Time.deltaTime;
-    }
-
+    
     private void FollowPlayer()
     {
-        if(range_enemy)
-        {
-            float distance = (player_dave.transform.position - transform.position).magnitude;
-            if(distance<rangePlayerDetectionRange)
-            {
-                return;
-            }
-        }
-        Vector2 dir = (player_dave.transform.position - transform.position).normalized;
         
+        Vector2 dir = (player_dave.transform.position - transform.position).normalized;
+
         //Debug.Log(dir);
 
         Vector2 targetpos = (Vector2)transform.position + speed * dir * Time.deltaTime;
@@ -116,7 +99,7 @@ public class Enemy_follow : MonoBehaviour
     {
         float distance = (player_dave.transform.position - transform.position).magnitude;
         //Debug.Log(player_dave.transform.position - transform.position);
-        if (distance<destroyRadius)
+        if (distance < rangePlayerDetectionRange)
         {
             PlayEffect();
             Destroy(gameObject);
@@ -125,10 +108,10 @@ public class Enemy_follow : MonoBehaviour
 
     public void PlayEffect()
     {
-        if(particleeffect!=null)
+        if (particleeffect != null)
         {
             particleeffect.transform.SetParent(null);
-            GameObject effect = Instantiate(particleeffect,transform.position, Quaternion.identity);
+            GameObject effect = Instantiate(particleeffect, transform.position, Quaternion.identity);
 
             ParticleSystem ps = effect.GetComponent<ParticleSystem>();
 
@@ -143,21 +126,12 @@ public class Enemy_follow : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(showGizmos)
+        if (showGizmos)
         {
-            if(!range_enemy)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(transform.position, destroyRadius);
-            }
-            else
-            {
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(transform.position, rangePlayerDetectionRange);
-            }
-            
         }
-       else
+        else
         {
             return;
         }
@@ -167,50 +141,21 @@ public class Enemy_follow : MonoBehaviour
     {
         enemy.SetActive(true); // 初始隐藏角色
         entranceeffect.SetActive(false); // 显示出场标识
-        colliders.enabled=true;
+        colliders.enabled = true;
         isentering = false;
     }
 
     private void TryAttack()
     {
-        if(!range_enemy)
-        {
-            float distance = (player_dave.transform.position - transform.position).magnitude;
-            attackTimer = 0;
-            if (distance < destroyRadius)
-            {
-                Attack();
-
-
-            }
-        }
-        else
-        {
-            float distance = (player_dave.transform.position - transform.position).magnitude;
-            if(distance<= rangePlayerDetectionRange)
-            {
-                Attack();
-            }
-        }
-        
-        
-        
+        Rattack.AutoAim();
     }
     private void Attack()
     {
-        //attackTimer = 0;
-        if(!range_enemy)
-        {
-            player_dave.TakeDamage(damage);
-        }
-        else
-        {
-            Debug.Log("Shooot");
-
-        }
-        
+        Debug.Log("Shooot");
     }
 
-    
+
 
 }
+
+

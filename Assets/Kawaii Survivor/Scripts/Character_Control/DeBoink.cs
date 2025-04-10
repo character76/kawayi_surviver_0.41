@@ -72,8 +72,11 @@ public class DeBoink : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            Enemy_follow enemy_checking = enemies[i].GetComponent<Enemy_follow>();
-            float disToenemy = Vector2.Distance(transform.position, enemy_checking.transform.position);
+            float disToenemy = 0;
+            Collider2D enemy_checking = enemies[i].GetComponent<Collider2D>();
+            
+            disToenemy = Vector2.Distance(transform.position, enemy_checking.transform.position);
+  
 
             if (disToenemy < minDis)
             {

@@ -177,6 +177,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1539594379150369091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8616054308591286644}
+  m_Layer: 6
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8616054308591286644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539594379150369091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.425, y: 0.357, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5415374303171484183}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2194014058443674537
 GameObject:
   m_ObjectHideFlags: 0
@@ -5378,9 +5409,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5415374303171484183}
-  - component: {fileID: 8470848950078359075}
   - component: {fileID: 2742406660833696416}
   - component: {fileID: 118991212574387113}
+  - component: {fileID: 6726853382509760391}
+  - component: {fileID: 2712368100678846871}
   m_Layer: 6
   m_Name: Range Enemy
   m_TagString: Untagged
@@ -5396,7 +5428,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7095069265084812594}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.43, y: 3.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5405,30 +5437,9 @@ Transform:
   - {fileID: 5941307033156855447}
   - {fileID: 9139353345699554925}
   - {fileID: 4459078955685919433}
+  - {fileID: 8616054308591286644}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8470848950078359075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7095069265084812594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cad8e09a01d42e4f95ca99291ed619a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 5574902449222792812}
-  colliders: {fileID: 2742406660833696416}
-  speed: 2
-  destroyRadius: 1.3
-  maxHealth: 10
-  particleeffect: {fileID: 2194014058443674537}
-  entranceeffect: {fileID: 8522532997399885113}
-  showGizmos: 0
-  damage: 2
-  attackFre: 1
 --- !u!58 &2742406660833696416
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5459,7 +5470,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5480,6 +5491,42 @@ MonoBehaviour:
   particleeffect: {fileID: 2194014058443674537}
   maxHealth: 10
   healthSlider: {fileID: 477839411372028571}
+--- !u!114 &6726853382509760391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7095069265084812594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6df7de83d4d9a4da854a615db948b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 5574902449222792812}
+  colliders: {fileID: 2742406660833696416}
+  speed: 1
+  rangePlayerDetectionRange: 5
+  maxHealth: 10
+  particleeffect: {fileID: 2194014058443674537}
+  entranceeffect: {fileID: 8522532997399885113}
+  showGizmos: 1
+--- !u!114 &2712368100678846871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7095069265084812594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa01d00d3c637ad459847d65e6f06274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingPoint: {fileID: 8616054308591286644}
+  bulletPrefab: {fileID: 590506057040400602, guid: 8c16caf6e9fe19e46aca239ace221b0a, type: 3}
+  damage: 1
+  attackFre: 1
 --- !u!1 &8522532997399885113
 GameObject:
   m_ObjectHideFlags: 0
