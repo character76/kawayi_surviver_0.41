@@ -56,7 +56,7 @@ public class MobileJoystick : MonoBehaviour
 
     private void ControlJoystick()
     {
-        Vector3 currentPosition = Input.mousePosition;
+        Vector3 currentPosition = Input.GetTouch(0).position;
         Vector3 direction = currentPosition - clickedPosition;
 
         float canvasScale = GetComponentInParent<Canvas>().GetComponent<RectTransform>().localScale.x;

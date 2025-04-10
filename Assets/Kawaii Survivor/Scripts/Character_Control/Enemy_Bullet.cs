@@ -41,7 +41,7 @@ public class Enemy_Bullet : MonoBehaviour
         {
             LeanTween.cancel(gameObject);
             player.TakeDamage(1);
-            this.cli.enabled = false;
+            cli.enabled = false;
             rangeEnemy.ReleaseBullet(this);
         }
     }
