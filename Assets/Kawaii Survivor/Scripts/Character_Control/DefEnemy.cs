@@ -1,28 +1,9 @@
 using UnityEngine;
 
-public class Enemy_follow : MonoBehaviour
+public class DefEnemy : Enemy
 {
-    [Header("Elements")] 
-    private Player player_dave;
-    private bool isentering = false;
-    [SerializeField] private GameObject enemy;
-    [SerializeField] private Collider2D colliders;
-   
-    
-
     [Header("Setting")]
     [SerializeField]private float speed;
-    [SerializeField] private float destroyRadius;
-    [SerializeField] private int maxHealth;
-    private int health;
-
-    [Header("Effect")]
-    [SerializeField] private GameObject particleeffect;
-    [SerializeField] private GameObject entranceeffect;
-
-    [Header("DEBUG")]
-    [SerializeField] private bool showGizmos;
-
     [Header("Attack")]
     [SerializeField] private int damage;
     [SerializeField] private float attackFre;
@@ -34,36 +15,10 @@ public class Enemy_follow : MonoBehaviour
     [SerializeField] private float rangePlayerDetectionRange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
-        health = maxHealth;
-        player_dave = FindFirstObjectByType<Player>(); 
-
-        if(player_dave == null)
-        {
-            Debug.LogWarning("noplayer found destroy");
-            Destroy(gameObject);
-        }
-
+        base.Start();
         attackDelay = 1f / attackFre;
-
-        //HIde the renderer
-        //SHow spawn indicator
-
-        //Scale spawn indi to show
-        //then show enemy and hide spawn 
-        
-
-        if(entranceeffect!=null)
-        {
-            isentering = true;
-            enemy.SetActive(false); // 初始隐藏角色
-            entranceeffect.SetActive(true); // 显示出场标识
-            Vector3 targetScale = entranceeffect.transform.localScale * 1.2f; 
-            LeanTween.scale(entranceeffect, targetScale, .3f)
-                .setLoopPingPong(4)
-                .setOnComplete(SpawnSequenceComplete);
-        }
 
     }
 
@@ -112,34 +67,9 @@ public class Enemy_follow : MonoBehaviour
 
         transform.position = targetpos;
     }
-    private void DestroyEnemy()
-    {
-        float distance = (player_dave.transform.position - transform.position).magnitude;
-        //Debug.Log(player_dave.transform.position - transform.position);
-        if (distance<destroyRadius)
-        {
-            PlayEffect();
-            Destroy(gameObject);
-        }
-    }
+    
 
-    public void PlayEffect()
-    {
-        if(particleeffect!=null)
-        {
-            particleeffect.transform.SetParent(null);
-            GameObject effect = Instantiate(particleeffect,transform.position, Quaternion.identity);
-
-            ParticleSystem ps = effect.GetComponent<ParticleSystem>();
-
-            if (ps != null)
-            {
-                ps.Play();
-                Destroy(effect, ps.main.duration); // 等粒子播放完再销毁
-            }
-        }
-
-    }
+    
 
     private void OnDrawGizmos()
     {
@@ -161,14 +91,6 @@ public class Enemy_follow : MonoBehaviour
         {
             return;
         }
-    }
-
-    private void SpawnSequenceComplete()
-    {
-        enemy.SetActive(true); // 初始隐藏角色
-        entranceeffect.SetActive(false); // 显示出场标识
-        colliders.enabled=true;
-        isentering = false;
     }
 
     private void TryAttack()

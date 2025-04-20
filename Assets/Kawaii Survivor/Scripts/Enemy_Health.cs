@@ -29,6 +29,7 @@ public class Enemy_Health : MonoBehaviour
         healthSlider.transform.position = health_pos;
         
     }
+    //For the Enemy to take damage
     public void TakeDamage(int damage)
     {
         int realDamage = Mathf.Min(damage, health);

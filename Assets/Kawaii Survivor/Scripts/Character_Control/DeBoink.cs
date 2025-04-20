@@ -12,7 +12,7 @@ public class DeBoink : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Transform Hitpoint;
     [SerializeField] private float Hit_range;
-    private List<Enemy_follow> damagesEnemy = new List<Enemy_follow>();
+    private List<Enemy> damagesEnemy = new List<Enemy>();
     [SerializeField] private BoxCollider2D Hitbox;
 
     [Header("Settings")]
@@ -56,7 +56,7 @@ public class DeBoink : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(Hitpoint.position, Hit_range);
     }
-    private Enemy_follow GetClosest()
+    private Enemy GetClosest()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, range, enemyMask);
         //Vector2 targetUp = Vector3.up;
@@ -90,20 +90,20 @@ public class DeBoink : MonoBehaviour
             
             return null;
         }
-        return enemies[cloestIndex].GetComponent<Enemy_follow>();
+        return enemies[cloestIndex].GetComponent<Enemy>();
     }
     private void AutoAim()
     {
-        Enemy_follow closest_Enemy = GetClosest();
+        Enemy closest_Enemy = GetClosest();
         Vector3 targetUp = Vector3.up;
         if(closest_Enemy!= null)
-        {   
+        {
             targetUp = (closest_Enemy.transform.position - transform.position).normalized;
             transform.up = targetUp;
         }
         else
         {
-
+            //Debug.Log("no close");
         }
         
         transform.up = Vector3.Lerp(transform.up, targetUp, Time.deltaTime * aimLerp);
@@ -137,11 +137,11 @@ public class DeBoink : MonoBehaviour
 
         for (int i=0;i<enemies.Length;i++)
         {
-            Enemy_follow enemy = enemies[i].GetComponent<Enemy_follow>();
+            Enemy enemy = enemies[i].GetComponent<Enemy>();
             if (!damagesEnemy.Contains(enemy) )
             {
                 enemies[i].GetComponent<Enemy_Health>().TakeDamage(damage);
-                damagesEnemy.Add(enemies[i].GetComponent<Enemy_follow>());
+                damagesEnemy.Add(enemies[i].GetComponent<Enemy>());
                 Debug.Log("Attack" + i);
             }
             
