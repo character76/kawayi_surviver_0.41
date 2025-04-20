@@ -1,11 +1,11 @@
 using UnityEngine;
-
+[RequireComponent(typeof(Enemy_Health))]
 public abstract class Enemy : MonoBehaviour
 {
     protected bool isentering = false;
     [Header("Elements")]
     protected Player player_dave;
-
+    [SerializeField] private Enemy_Health Health;
     [SerializeField] protected GameObject enemy;
     [SerializeField] protected Collider2D colliders;
     [Header("Setting")]
@@ -81,6 +81,10 @@ public abstract class Enemy : MonoBehaviour
             }
         }
 
+    }
+    public void TakeDamage(int damage)
+    {
+        Health.TakeDamage(damage);
     }
 
 }

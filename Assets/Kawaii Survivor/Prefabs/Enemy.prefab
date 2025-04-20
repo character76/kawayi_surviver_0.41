@@ -277,14 +277,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cad8e09a01d42e4f95ca99291ed619a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: {fileID: 2552801377058643097}
   enemy: {fileID: 9171843672880345790}
   colliders: {fileID: 6628255810269629110}
-  speed: 2
-  destroyRadius: 1.3
   maxHealth: 10
+  destroyRadius: 1.3
   particleeffect: {fileID: 4724672402368633920}
   entranceeffect: {fileID: 6214322877150134863}
   showGizmos: 0
+  speed: 2
   damage: 2
   attackFre: 1
   range_enemy: 0
@@ -319,7 +320,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

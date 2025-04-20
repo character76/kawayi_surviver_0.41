@@ -1,35 +1,13 @@
 using UnityEngine;
-using System.Collections.Generic;
-public class DeBoink : MonoBehaviour
+
+public class DeBoink : Weapon
 {
-    enum State
-    {
-        Idle,
-        Attack
-    }
-    private State state;
 
-    [Header("Elements")]
-    [SerializeField] private Transform Hitpoint;
-    [SerializeField] private float Hit_range;
-    private List<Enemy> damagesEnemy = new List<Enemy>();
-    [SerializeField] private BoxCollider2D Hitbox;
-
-    [Header("Settings")]
-    [SerializeField] private float range;
-    [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private float aimLerp;
-    [SerializeField] private int damage;
-    [SerializeField] private float attackDelay;
-    private float attackTimer=0;
-
-    [Header("Animation")]
-    [SerializeField] private Animator animator;
     //[SerializeField] private Transform Enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
-        state = State.Idle;
+        base.Start();
     }
 
     // Update is called once per frame
@@ -49,49 +27,8 @@ public class DeBoink : MonoBehaviour
         //Debug.Log("Closest Enemy" + cloestIndex + " dis " + minDis);
         
     }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position,range);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(Hitpoint.position, Hit_range);
-    }
-    private Enemy GetClosest()
-    {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, range, enemyMask);
-        //Vector2 targetUp = Vector3.up;
-
-        if (enemies.Length <= 0)
-        {
-            
-            //Debug.LogWarning("No cloest");
-            return null;
-        }
-        int cloestIndex = -1;
-        float minDis = range;
-
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            float disToenemy = 0;
-            Collider2D enemy_checking = enemies[i].GetComponent<Collider2D>();
-            
-            disToenemy = Vector2.Distance(transform.position, enemy_checking.transform.position);
-  
-
-            if (disToenemy < minDis)
-            {
-                minDis = disToenemy;
-                cloestIndex = i;
-            }
-            else continue;
-        }
-        if (cloestIndex == -1)
-        {
-            
-            return null;
-        }
-        return enemies[cloestIndex].GetComponent<Enemy>();
-    }
+    
+    
     private void AutoAim()
     {
         Enemy closest_Enemy = GetClosest();
@@ -148,7 +85,6 @@ public class DeBoink : MonoBehaviour
             
         }
     }
-    [NaughtyAttributes.Button]
     public void StartAttack()
     {
         animator.Play("Attack");
@@ -167,4 +103,6 @@ public class DeBoink : MonoBehaviour
         state = State.Idle;
         damagesEnemy.Clear();
     }
+
+
 }
