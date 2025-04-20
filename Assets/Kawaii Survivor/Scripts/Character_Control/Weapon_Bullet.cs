@@ -5,7 +5,7 @@ public class Weapon_Bullet : MonoBehaviour
     [Header("Element")]
     [SerializeField] private Rigidbody2D rig;
     [SerializeField] private Collider2D cli;
-
+    private RangeWeapon rangeweapon;
     [Header("Settings")]
     private int damage;
     [SerializeField] private float movespeed;
@@ -28,8 +28,13 @@ public class Weapon_Bullet : MonoBehaviour
     {
         
     }
+    public void Configure(RangeWeapon Rweapon)
+    {
+        this.rangeweapon = Rweapon;
+    }
     public void Shoot(Vector2 direction,int damage)
     {
+        Invoke("Release", 1);
         this.damage = damage;
         transform.right = direction;
         rig.linearVelocity = direction * movespeed;
@@ -64,12 +69,25 @@ public class Weapon_Bullet : MonoBehaviour
         Enemy_Health health = enemy.GetComponent<Enemy_Health>();
         if (health != null)
         {
+            CancelInvoke();
             //Debug.Log("Take damage");
             health.TakeDamage(damage);
+            Release();
         }
         else
         {
             //Debug.LogError("Enemy 对象上没有 Enemy_Health 组件：" + enemy.gameObject.name);
         }
+    }
+    public void Reload()
+    {
+        rig.linearVelocity = Vector2.zero;
+        cli.enabled = true;
+    }
+    private void Release()
+    {
+        if (!gameObject.activeSelf)
+            return;
+        rangeweapon.ReleaseBullet(this);
     }
 }

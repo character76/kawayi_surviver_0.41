@@ -1,16 +1,19 @@
 using UnityEngine;
-
+using UnityEngine.Pool;
 public class RangeWeapon : Weapon
 {
     [Header("Elements")]
     private Player players;
     [SerializeField] private Weapon_Bullet bullet;
+    [Header("Pooling")]
+    private ObjectPool<Weapon_Bullet> bulletPool;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         players = FindFirstObjectByType<Player>();
         base.Start();
+        bulletPool = new ObjectPool<Weapon_Bullet>(CreatFunction, ActionOnGet, ActionOnRelease, ActionOnDestroy);
 
     }
 
@@ -53,7 +56,33 @@ public class RangeWeapon : Weapon
     {
         //Vector2 dir = (players.GetCenter() - (Vector2)Hitpoint.position).normalized;
 
-        Weapon_Bullet bulletInstance = Instantiate(bullet, Hitpoint.position, Quaternion.identity);
+        Weapon_Bullet bulletInstance = bulletPool.Get();
         bulletInstance.Shoot(transform.up, damage);
     }
+    private Weapon_Bullet CreatFunction()
+    {
+        Weapon_Bullet bullets = Instantiate(bullet, Hitpoint.position, Quaternion.identity);
+        bullets.Configure(this);
+        return bullets;
+        //return Instantiate(enemyBulletPre, shootingPoint.position, Quaternion.identity);
+    }
+    private void ActionOnGet(Weapon_Bullet bullets)
+    {
+        bullets.Reload();
+        bullets.transform.position = Hitpoint.position;
+        bullet.gameObject.SetActive(true);
+    }
+    private void ActionOnRelease(Weapon_Bullet bullets)
+    {
+        bullet.gameObject.SetActive(false);
+    }
+    private void ActionOnDestroy(Weapon_Bullet bullets)
+    {
+        Destroy(bullets.gameObject);
+    }
+    public void ReleaseBullet(Weapon_Bullet bullet)
+    {
+        bulletPool.Release(bullet);
+    }
+
 }

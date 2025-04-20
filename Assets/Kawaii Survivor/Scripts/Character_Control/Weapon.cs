@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     protected enum State
     {
