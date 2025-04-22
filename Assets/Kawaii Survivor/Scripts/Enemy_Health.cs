@@ -37,7 +37,7 @@ public class Enemy_Health : MonoBehaviour
 
         healthSlider.value = (float)health / (float)maxHealth;
         //healthText.text = health + "/" + maxHealth;
-        Debug.Log("healthslider" + healthSlider.value + "remaining health" + health);
+        //Debug.Log("healthslider" + healthSlider.value + "remaining health" + health);
 
         onDamageTaken?.Invoke(damage,transform.position);
         if (health <= 0)

@@ -27,12 +27,12 @@ public class DamageEffectsMana : MonoBehaviour
 
     private void ActionOnGet(Damage_text damage_Text)
     {
-        damageTextPrefab.gameObject.SetActive(true);
+        damage_Text.gameObject.SetActive(true);
     }
 
     private void ActionOnRelease(Damage_text damage_Text)
     {
-        damageTextPrefab.gameObject.SetActive(false);
+        damage_Text.gameObject.SetActive(false);
     }
     private void ActionOnDestroy(Damage_text damage_Text)
     {

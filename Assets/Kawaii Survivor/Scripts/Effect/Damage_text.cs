@@ -19,7 +19,13 @@ public class Damage_text : MonoBehaviour
     [NaughtyAttributes.Button]
     public void Animator_Play(int damage)
     {
+
         damage_text.text = damage.ToString();
+        //if (!gameObject.activeInHierarchy)
+        //{
+            //gameObject.SetActive(true);
+        //}
+        
         animator.Play("Damage_text");
     }
 }
