@@ -6,6 +6,7 @@ public class Weapon_Bullet : MonoBehaviour
     [SerializeField] private Rigidbody2D rig;
     [SerializeField] private Collider2D cli;
     private RangeWeapon rangeweapon;
+    private bool isCriticalhit;
     [Header("Settings")]
     private int damage;
     [SerializeField] private float movespeed;
@@ -32,17 +33,17 @@ public class Weapon_Bullet : MonoBehaviour
     {
         this.rangeweapon = Rweapon;
     }
-    public void Shoot(Vector2 direction,int damage)
+    public void Shoot(Vector2 direction,int damage,bool isCriticalhit)
     {
         Invoke("Release", 1);
         this.damage = damage;
+        this.isCriticalhit = isCriticalhit;
         transform.right = direction;
         rig.linearVelocity = direction * movespeed;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("Åö×²¼ì²â·¢ÉúÔÚ£º" + collision.gameObject.name + "£¬Layer: " + collision.gameObject.layer+ IsInLayerMask(enemyMask, collision.gameObject.layer));
-
         if (IsInLayerMask( collision.gameObject.layer,enemyMask))
         {
             //Debug.Log("Collide with: " + collision.gameObject.name);
@@ -69,9 +70,11 @@ public class Weapon_Bullet : MonoBehaviour
         Enemy_Health health = enemy.GetComponent<Enemy_Health>();
         if (health != null)
         {
+            //int damage = GetDamage(out bool isCriticalhit);
             CancelInvoke();
             //Debug.Log("Take damage");
-            health.TakeDamage(damage);
+            Debug.Log("Attack" + damage);
+            health.TakeDamage(damage,isCriticalhit);
             Release();
         }
         else

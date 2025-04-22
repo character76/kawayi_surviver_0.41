@@ -55,9 +55,10 @@ public class RangeWeapon : Weapon
     private void Shoot()
     {
         //Vector2 dir = (players.GetCenter() - (Vector2)Hitpoint.position).normalized;
-
+        int damage = GetDamage(out bool isCriticalhit);
         Weapon_Bullet bulletInstance = bulletPool.Get();
-        bulletInstance.Shoot(transform.up, damage);
+        //Debug.Log("Shoot" + damage);
+        bulletInstance.Shoot(transform.up, damage, isCriticalhit);
     }
     private Weapon_Bullet CreatFunction()
     {

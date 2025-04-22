@@ -80,5 +80,15 @@ public abstract class Weapon : MonoBehaviour
         }
         return enemies[cloestIndex].GetComponent<Enemy>();
     }
+    protected int GetDamage(out bool isCriticalhit)
+    {
+        isCriticalhit = false;
+        if(Random.Range(0,101)<= 50)
+        {
+            isCriticalhit = true;
+            return damage * 2;
+        }
+        return damage;
+    }
     
 }

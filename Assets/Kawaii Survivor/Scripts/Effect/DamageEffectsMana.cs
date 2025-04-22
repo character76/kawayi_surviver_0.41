@@ -45,12 +45,12 @@ public class DamageEffectsMana : MonoBehaviour
         
     }
     //[NaughtyAttributes.Button]
-    private void EnemyHitCallBack(int damage,Vector2 enemyPos)
+    private void EnemyHitCallBack(int damage,Vector2 enemyPos,bool isCritical)
     {
         Vector3 spawnPos = enemyPos +Vector2.up*1;
         Damage_text DamagetextInstant = damagePool.Get();
         DamagetextInstant.transform.position = spawnPos;
-        DamagetextInstant.Animator_Play(damage);
+        DamagetextInstant.Animator_Play(damage,isCritical);
         LeanTween.delayedCall(1, () => damagePool.Release(DamagetextInstant));
     }
 }

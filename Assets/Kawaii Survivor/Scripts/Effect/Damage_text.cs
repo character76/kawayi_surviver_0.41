@@ -17,15 +17,15 @@ public class Damage_text : MonoBehaviour
         
     }
     [NaughtyAttributes.Button]
-    public void Animator_Play(int damage)
+    public void Animator_Play(int damage,bool isCritical)
     {
 
         damage_text.text = damage.ToString();
         //if (!gameObject.activeInHierarchy)
         //{
-            //gameObject.SetActive(true);
+        //gameObject.SetActive(true);
         //}
-        
+        damage_text.color = isCritical ? Color.yellow : Color.white;
         animator.Play("Damage_text");
     }
 }

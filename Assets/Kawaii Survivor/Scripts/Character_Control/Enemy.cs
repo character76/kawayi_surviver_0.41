@@ -82,9 +82,9 @@ public abstract class Enemy : MonoBehaviour
         }
 
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage,bool isCri)
     {
-        Health.TakeDamage(damage);
+        Health.TakeDamage(damage,isCri);
     }
 
 }

@@ -77,9 +77,10 @@ public class DeBoink : Weapon
             Enemy enemy = enemies[i].GetComponent<Enemy>();
             if (!damagesEnemy.Contains(enemy) )
             {
-                enemies[i].GetComponent<Enemy_Health>().TakeDamage(damage);
+                int damage = GetDamage(out bool isCriticalhit);
+                enemies[i].GetComponent<Enemy_Health>().TakeDamage(damage,isCriticalhit);
                 damagesEnemy.Add(enemies[i].GetComponent<Enemy>());
-                Debug.Log("Attack" + i);
+                //Debug.Log("Attack" + damage);
             }
             
             

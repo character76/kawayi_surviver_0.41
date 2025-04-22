@@ -14,7 +14,7 @@ public class Enemy_Health : MonoBehaviour
     [SerializeField] private Slider healthSlider;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Actions")]
-    public static Action<int,Vector2> onDamageTaken;
+    public static Action<int,Vector2,bool> onDamageTaken;
     void Start()
     {
         health = maxHealth;
@@ -30,7 +30,7 @@ public class Enemy_Health : MonoBehaviour
         
     }
     //For the Enemy to take damage
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage,bool isCritical)
     {
         int realDamage = Mathf.Min(damage, health);
         health -= realDamage;
@@ -39,7 +39,7 @@ public class Enemy_Health : MonoBehaviour
         //healthText.text = health + "/" + maxHealth;
         //Debug.Log("healthslider" + healthSlider.value + "remaining health" + health);
 
-        onDamageTaken?.Invoke(damage,transform.position);
+        onDamageTaken?.Invoke(damage,transform.position,isCritical);
         if (health <= 0)
         {
             Diemethod();
