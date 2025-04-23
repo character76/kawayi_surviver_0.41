@@ -15,6 +15,7 @@ public class Enemy_Health : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Actions")]
     public static Action<int,Vector2,bool> onDamageTaken;
+    public static Action<Vector2> onDieDrop;
     void Start()
     {
         health = maxHealth;
@@ -38,7 +39,7 @@ public class Enemy_Health : MonoBehaviour
         healthSlider.value = (float)health / (float)maxHealth;
         //healthText.text = health + "/" + maxHealth;
         //Debug.Log("healthslider" + healthSlider.value + "remaining health" + health);
-
+        
         onDamageTaken?.Invoke(damage,transform.position,isCritical);
         if (health <= 0)
         {
@@ -53,7 +54,7 @@ public class Enemy_Health : MonoBehaviour
             GameObject effect = Instantiate(particleeffect, transform.position, Quaternion.identity);
 
             ParticleSystem ps = effect.GetComponent<ParticleSystem>();
-
+            onDieDrop?.Invoke(transform.position);
             if (ps != null)
             {
                 ps.Play();
