@@ -13,22 +13,7 @@ public class Weapon_Bullet : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     private Vector3 shootpos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Awake()
-    {
-        //rig = GetComponent<Rigidbody2D>();
-        //cli = GetComponent<Collider2D>();
-        //LeanTween.delayedCall(gameObject, 5, () => rangeEnemy.ReleaseBullet(this));
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     public void Configure(RangeWeapon Rweapon)
     {
         this.rangeweapon = Rweapon;

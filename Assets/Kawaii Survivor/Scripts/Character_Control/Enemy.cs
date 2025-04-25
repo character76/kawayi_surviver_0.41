@@ -9,7 +9,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected GameObject enemy;
     [SerializeField] protected Collider2D colliders;
     [Header("Setting")]
-    [SerializeField] protected int maxHealth;
+    
     [SerializeField] protected float destroyRadius;
     protected int health;
     [Header("Effect")]
@@ -20,7 +20,7 @@ public abstract class Enemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
-        health = maxHealth;
+        
         player_dave = FindFirstObjectByType<Player>();
         if (player_dave == null)
         {

@@ -280,7 +280,6 @@ MonoBehaviour:
   Health: {fileID: 2552801377058643097}
   enemy: {fileID: 9171843672880345790}
   colliders: {fileID: 6628255810269629110}
-  maxHealth: 10
   destroyRadius: 1.3
   particleeffect: {fileID: 4724672402368633920}
   entranceeffect: {fileID: 6214322877150134863}
@@ -339,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleeffect: {fileID: 4724672402368633920}
-  maxHealth: 10
+  maxHealth: 20
   healthSlider: {fileID: 3023327926055344125}
 --- !u!1 &4724672402368633920
 GameObject:

@@ -5489,7 +5489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleeffect: {fileID: 2194014058443674537}
-  maxHealth: 10
+  maxHealth: 20
   healthSlider: {fileID: 477839411372028571}
 --- !u!114 &6726853382509760391
 MonoBehaviour:
@@ -5506,11 +5506,10 @@ MonoBehaviour:
   Health: {fileID: 118991212574387113}
   enemy: {fileID: 5574902449222792812}
   colliders: {fileID: 2742406660833696416}
-  maxHealth: 10
   destroyRadius: 0
   particleeffect: {fileID: 2194014058443674537}
   entranceeffect: {fileID: 8522532997399885113}
-  showGizmos: 1
+  showGizmos: 0
   speed: 1
   rangePlayerDetectionRange: 5
 --- !u!114 &2712368100678846871
@@ -5525,7 +5524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa01d00d3c637ad459847d65e6f06274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBulletPre: {fileID: 0}
+  enemyBulletPre: {fileID: 590506057040400602, guid: 8c16caf6e9fe19e46aca239ace221b0a, type: 3}
   shootingPoint: {fileID: 8616054308591286644}
   bulletPrefab: {fileID: 590506057040400602, guid: 8c16caf6e9fe19e46aca239ace221b0a, type: 3}
   damage: 1
